@@ -37,8 +37,7 @@ jobs:
       - name: Download Plugins
         run: |
           set -e
-          mkdir plugins
-          pushd docker-geoserver/plugins
+          mkdir plugins && pushd plugins
           wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-authkey-plugin.zip'
           wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-control-flow-plugin.zip'
           wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-monitor-plugin.zip'
