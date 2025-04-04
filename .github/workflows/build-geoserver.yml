@@ -61,5 +61,5 @@ jobs:
       - name: Upload Docker image as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: geoserver:C321-2.26.x.tar
+          name: geoserver_C321-2.26.x.tar
           path: ./geoserver:C321-2.26.x.tar
