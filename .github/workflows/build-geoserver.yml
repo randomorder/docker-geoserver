@@ -56,7 +56,7 @@ jobs:
       - name: Save Docker image as tarball
         run: |
           set -e
-          docker save geoserver-custom:2.26 -o geoserver-custom-2.26.tar
+          docker save geosolutionsit/geoserver:C321-2.26.x -o geoserver:C321-2.26.x.tar
 
       - name: Simulate artifact upload (placeholder)
         run: echo "Would upload geoserver-custom-2.26.tar here."
