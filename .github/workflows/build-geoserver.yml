@@ -29,6 +29,7 @@ jobs:
         run: |
           set -e
           git clone -b C321 https://github.com/geosolutions-it/docker-geoserver.git
+          ls -l
           cd docker-geoserver
           unzip ../geoserver-war.zip -d .
           #mv geoserver.war geoserver.war
@@ -36,8 +37,8 @@ jobs:
       - name: Download Plugins
         run: |
           set -e
-          mkdir -p docker-geoserver/plugins
-          cd docker-geoserver/plugins
+          mkdir plugins
+          pushd docker-geoserver/plugins
           wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-authkey-plugin.zip'
           wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-control-flow-plugin.zip'
           wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-monitor-plugin.zip'
@@ -48,11 +49,11 @@ jobs:
           wget 'https://build.geoserver.org/geoserver/2.26.x/community-latest/geoserver-2.26-SNAPSHOT-cog-s3-plugin.zip'
           wget 'https://build.geoserver.org/geoserver/2.26.x/community-latest/geoserver-2.26-SNAPSHOT-cog-http-plugin.zip'
           wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-gwc-s3-plugin.zip'
+          popd
 
       - name: Build Docker image
         run: |
           set -e
-          cd docker-geoserver
           docker compose build .
 
       - name: Save Docker image as tarball
