@@ -1,0 +1,66 @@
+name: Build and Package GeoServer Docker Image
+
+on:
+  push:
+    branches:
+      - C321
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v3
+
+      - name: Install required packages
+        run: |
+          set -e
+          sudo apt-get update
+          sudo apt-get install -y unzip wget git
+
+      - name: Download GeoServer WAR
+        run: |
+          set -e
+          wget 'https://build.geoserver.org/geoserver/2.26.x/geoserver-2.26.x-latest-war.zip' -O geoserver-war.zip
+
+      - name: Clone docker-geoserver repo
+        run: |
+          set -e
+          git clone -b C321 https://github.com/geosolutions-it/docker-geoserver.git
+          cd docker-geoserver
+          unzip ../geoserver-war.zip -d .
+          mv geoserver.war geoserver.war  # safety noop if already named right
+
+      - name: Download Plugins
+        run: |
+          set -e
+          mkdir -p docker-geoserver/plugins
+          cd docker-geoserver/plugins
+          wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-authkey-plugin.zip'
+          wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-control-flow-plugin.zip'
+          wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-monitor-plugin.zip'
+          wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-wmts-multi-dimensional-plugin.zip'
+          wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-wps-jdbc-plugin.zip'
+          wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-wps-plugin.zip'
+          wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-web-resource-plugin.zip'
+          wget 'https://build.geoserver.org/geoserver/2.26.x/community-latest/geoserver-2.26-SNAPSHOT-cog-s3-plugin.zip'
+          wget 'https://build.geoserver.org/geoserver/2.26.x/community-latest/geoserver-2.26-SNAPSHOT-cog-http-plugin.zip'
+          wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-gwc-s3-plugin.zip'
+
+      - name: Build Docker image
+        run: |
+          set -e
+          cd docker-geoserver
+          docker build -t geoserver-custom:2.26 .
+
+      - name: Save Docker image as tarball
+        run: |
+          set -e
+          docker save geoserver-custom:2.26 -o geoserver-custom-2.26.tar
+
+      - name: Upload Docker image as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: geoserver-custom-2.26
+          path: geoserver-custom-2.26.tar
