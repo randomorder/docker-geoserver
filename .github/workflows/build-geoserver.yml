@@ -23,11 +23,10 @@ jobs:
       - name: Clone docker-geoserver repo
         run: |
           set -e
-          git clone -b C321 https://github.com/geosolutions-it/docker-geoserver.git
           ls -l
-          cd docker-geoserver
           wget -q 'https://build.geoserver.org/geoserver/2.26.x/geoserver-2.26.x-latest-war.zip' -O geoserver-war.zip
           unzip ./geoserver-war.zip
+          pwd
           ls
 
       - name: Download Plugins
@@ -45,10 +44,12 @@ jobs:
           wget -q 'https://build.geoserver.org/geoserver/2.26.x/community-latest/geoserver-2.26-SNAPSHOT-cog-http-plugin.zip'
           wget -q 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-gwc-s3-plugin.zip'
           popd
+          pwd
 
       - name: Build Docker image
         run: |
           set -e
+          pwd
           ls -l
           docker compose build
 
