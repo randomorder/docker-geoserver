@@ -20,19 +20,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y unzip wget git
 
-      - name: Download GeoServer WAR
-        run: |
-          set -e
-          wget 'https://build.geoserver.org/geoserver/2.26.x/geoserver-2.26.x-latest-war.zip' -O geoserver-war.zip
-
       - name: Clone docker-geoserver repo
         run: |
           set -e
           git clone -b C321 https://github.com/geosolutions-it/docker-geoserver.git
           ls -l
           cd docker-geoserver
-          unzip ../geoserver-war.zip -d .
-          #mv geoserver.war geoserver.war
+          wget 'https://build.geoserver.org/geoserver/2.26.x/geoserver-2.26.x-latest-war.zip' -O geoserver-war.zip
+          unzip ./geoserver-war.zip
+          ls
 
       - name: Download Plugins
         run: |
