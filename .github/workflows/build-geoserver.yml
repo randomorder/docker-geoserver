@@ -31,7 +31,7 @@ jobs:
           git clone -b C321 https://github.com/geosolutions-it/docker-geoserver.git
           cd docker-geoserver
           unzip ../geoserver-war.zip -d .
-          mv geoserver.war geoserver.war  # safety noop if already named right
+          #mv geoserver.war geoserver.war
 
       - name: Download Plugins
         run: |
