@@ -26,7 +26,7 @@ jobs:
           git clone -b C321 https://github.com/geosolutions-it/docker-geoserver.git
           ls -l
           cd docker-geoserver
-          wget 'https://build.geoserver.org/geoserver/2.26.x/geoserver-2.26.x-latest-war.zip' -O geoserver-war.zip
+          wget -q 'https://build.geoserver.org/geoserver/2.26.x/geoserver-2.26.x-latest-war.zip' -O geoserver-war.zip
           unzip ./geoserver-war.zip
           ls
 
@@ -34,21 +34,22 @@ jobs:
         run: |
           set -e
           mkdir plugins && pushd plugins
-          wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-authkey-plugin.zip'
-          wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-control-flow-plugin.zip'
-          wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-monitor-plugin.zip'
-          wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-wmts-multi-dimensional-plugin.zip'
-          wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-wps-jdbc-plugin.zip'
-          wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-wps-plugin.zip'
-          wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-web-resource-plugin.zip'
-          wget 'https://build.geoserver.org/geoserver/2.26.x/community-latest/geoserver-2.26-SNAPSHOT-cog-s3-plugin.zip'
-          wget 'https://build.geoserver.org/geoserver/2.26.x/community-latest/geoserver-2.26-SNAPSHOT-cog-http-plugin.zip'
-          wget 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-gwc-s3-plugin.zip'
+          wget -q 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-authkey-plugin.zip'
+          wget -q 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-control-flow-plugin.zip'
+          wget -q 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-monitor-plugin.zip'
+          wget -q 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-wmts-multi-dimensional-plugin.zip'
+          wget -q 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-wps-jdbc-plugin.zip'
+          wget -q 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-wps-plugin.zip'
+          wget -q 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-web-resource-plugin.zip'
+          wget -q 'https://build.geoserver.org/geoserver/2.26.x/community-latest/geoserver-2.26-SNAPSHOT-cog-s3-plugin.zip'
+          wget -q 'https://build.geoserver.org/geoserver/2.26.x/community-latest/geoserver-2.26-SNAPSHOT-cog-http-plugin.zip'
+          wget -q 'https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-gwc-s3-plugin.zip'
           popd
 
       - name: Build Docker image
         run: |
           set -e
+          ls -l
           docker compose build
 
       - name: Save Docker image as tarball
