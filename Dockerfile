@@ -1,4 +1,4 @@
-FROM tomcat:9-jdk11-temurin-jammy as mother
+FROM tomcat:9-jdk17-temurin-jammy as mother
 LABEL maintainer="Alessandro Parma <alessandro.parma@geosolutionsgroup.com>"
 SHELL ["/bin/bash", "-c"]
 
@@ -49,8 +49,9 @@ ADD .placeholder ${PLUG_IN_PATHS} /output/plugins/
 COPY geoserver-plugin-download.sh /usr/local/bin/geoserver-plugin-download.sh
 RUN /usr/local/bin/geoserver-plugin-download.sh /output/plugins/ ${PLUG_IN_URLS}
 RUN \
-    if [ -f *.zip ] ; then \
+    if ls *.zip >/dev/null 2>&1; then \
        unzip -o "./*.zip"; \
+       rm ./*zip; \
     fi
 
 WORKDIR /output/webapp
@@ -59,7 +60,7 @@ RUN \
       mv /output/webapp/geoserver /output/webapp/${APP_LOCATION}; \
     fi
 
-FROM tomcat:9-jdk11-temurin-jammy
+FROM tomcat:9-jdk17-temurin-jammy
 
 ARG UID=1000
 ARG GID=1000
