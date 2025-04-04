@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - C321
+      - master
 
 jobs:
   build:
