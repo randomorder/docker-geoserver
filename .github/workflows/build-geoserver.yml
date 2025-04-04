@@ -58,5 +58,8 @@ jobs:
           set -e
           docker save geosolutionsit/geoserver:C321-2.26.x -o geoserver:C321-2.26.x.tar
 
-      - name: Simulate artifact upload (placeholder)
-        run: echo "Would upload geoserver-custom-2.26.tar here."
+      - name: Upload Docker image as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: geoserver:C321-2.26.x.tar
+          path: ./geoserver:C321-2.26.x.tar
