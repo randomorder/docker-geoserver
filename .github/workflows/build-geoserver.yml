@@ -60,7 +60,7 @@ jobs:
           docker save geoserver-custom:2.26 -o geoserver-custom-2.26.tar
 
       - name: Upload Docker image as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: geoserver-custom-2.26
           path: geoserver-custom-2.26.tar
