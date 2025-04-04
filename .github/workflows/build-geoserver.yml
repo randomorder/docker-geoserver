@@ -53,7 +53,7 @@ jobs:
         run: |
           set -e
           cd docker-geoserver
-          docker compose build -t geoserver-custom:2.26 .
+          docker compose build .
 
       - name: Save Docker image as tarball
         run: |
